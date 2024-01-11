@@ -16,11 +16,11 @@ function exponentiation(int|float $numberUser, int $degree) : int|float
 echo( 'exponentiation  -  ' . exponentiation(3, 3) .  PHP_EOL);
 
 
-function returnNewNumber(int $operandFirst, int &$operandSecond) : int
+function returnNewNumber(int $operandFirst, int &$operandSecond): void
 {
-   return $operandSecond += $operandFirst;
+    $operandSecond += $operandFirst;
+    echo ( '$operandSecond  -  ' . $operandSecond .  PHP_EOL);
 }
 $operandSecond = 4;
 echo ( '$operandSecond  -  ' . $operandSecond .  PHP_EOL);
-echo ( 'returnNewNumber  -  ' . returnNewNumber(7,  $operandSecond) .  PHP_EOL);
-echo ( '$operandSecond  -  ' . $operandSecond .  PHP_EOL);
+returnNewNumber(7,  $operandSecond);
