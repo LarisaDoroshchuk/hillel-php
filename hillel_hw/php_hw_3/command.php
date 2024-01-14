@@ -28,7 +28,7 @@ function dataComparison($operandFirst,  $operandSecond)
 
             if ($operandFirst < $operandSecond) {
                 echo "Answer(<) : {$operandFirstList} < {$operandSecondList} \n";
-            } else if ($operandFirst > $operandSecond) {
+            } elseif ($operandFirst > $operandSecond) {
                 echo "Answer(<) : {$operandFirstList} > {$operandSecondList} \n";
             } else {
                 echo "Answer(<) : {$operandFirstList} == {$operandSecondList} \n";
