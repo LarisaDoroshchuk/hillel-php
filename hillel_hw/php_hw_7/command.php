@@ -4,8 +4,8 @@ declare(strict_types=1);
 function randArr(int $length, int $min = 1, int $max = 99): array
 {
     $arr = [];
-    for ($i = 0; count($arr) < $length; $i++) {
-        $arr[] = rand($min, $max);
+    for ($i = 0; $i < $length; $i++) {
+        $arr[$i] = rand($min, $max);
     }
     return $arr;
 }
@@ -64,5 +64,6 @@ function sortArr($arr): array
     return $arr;
 
 }
+
 echo 'sortArr - ';
 var_dump(sortArr($array));
