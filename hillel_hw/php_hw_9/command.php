@@ -28,12 +28,16 @@ echo("sum = " . sumElemArr($randomArr) . PHP_EOL);
 
 function multiplicationArr(array $arr)
 {
-    $multiplication = true;
-    foreach ($arr as $value) {
-        $multiplication *= $value;
+    if ($arr) {
+        $multiplication = 1;
+        foreach ($arr as $value) {
+            $multiplication *= $value;
 
+        }
+        return $multiplication;
+    } else {
+        return 0;
     }
-    return $multiplication === true ? 0 : $multiplication;
 }
 
 echo("multiplication = " . multiplicationArr($randomArr) . PHP_EOL);
