@@ -3,19 +3,21 @@ declare(strict_types=1);
 
 function argumentsUser(): void
 {
-
-    $file = fopen("arguments.txt", "a+");
-
     for ($i = 1; $i <= 3; $i++) {
         echo("Enter your number: № " . $i . ' =  ');
         $operand = trim(fgets(STDIN));
-        fwrite($file, $operand . "\n");
+        writingArgumentFile($operand);
     }
+}
+
+function writingArgumentFile(string $argument): void
+{
+    $file = fopen("arguments.txt", "a+");
+    fwrite($file, $argument . "\n");
     fclose($file);
 }
 
 argumentsUser();
-
 
 //Option#1 - getLastArguments
 function getLastArguments(): string
