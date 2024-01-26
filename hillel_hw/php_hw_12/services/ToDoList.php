@@ -13,18 +13,53 @@ class ToDoList
     private string $taskFilePath;
     private $file;
 
-
     /**
      * @param string $taskFileName
      * @throws Exception
      */
     public function __construct(string $taskFileName)
     {
-        $this->taskFileName = $taskFileName;
-        $this->taskFilePath = 'data/' . $taskFileName . '.txt';
+        $this->setTaskFileName($taskFileName);
+        $this->setTaskFilePath('data/' . $this->getTaskFileName() . '.txt');
         $this->readTasksFromFile();
     }
 
+
+    public function getTaskFilePath(): string
+    {
+        return $this->taskFilePath;
+    }
+
+    public function setTaskFilePath(string $taskFilePath): void
+    {
+        $this->taskFilePath = $taskFilePath;
+    }
+
+    public function setTasks(array $tasks): void
+    {
+        $this->tasks = $tasks;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTaskFileName(): string
+    {
+        return $this->taskFileName;
+    }
+
+    /**
+     * @param string $taskFileName
+     * @return void
+     * @throws Exception
+     */
+    public function setTaskFileName(string $taskFileName): void
+    {
+        if (!trim($taskFileName)) {
+            throw new Exception('File name not sent');
+        }
+        $this->taskFileName = $taskFileName;
+    }
 
     /**
      * @param string $taskName
@@ -37,7 +72,7 @@ class ToDoList
         if ($priority < 0 || $priority > 10) {
             throw new Exception('priority should be between 1 and 10');
         }
-        if ($taskName < 2) {
+        if (strlen($taskName) < 2) {
             throw new Exception('taskName should not be shorter 2 symbols');
         }
 
@@ -54,7 +89,7 @@ class ToDoList
      */
     public function getTasks(): array
     {
-        return $this->tasks;
+        return $this->sortTasks($this->tasks);
     }
 
     /**
@@ -76,9 +111,26 @@ class ToDoList
      */
     public function deleteTask(string $taskId): void
     {
-        $this->tasks = array_filter($this->tasks, function ($item) use ($taskId) {
+        $this->setTasks(array_filter($this->tasks, function ($item) use ($taskId) {
             return $item[0] !== $taskId;
-        });
+        }));
+    }
+
+    /**
+     * @param array $tasks
+     * @return array
+     */
+    private function sortTasks(array $tasks): array
+    {
+        $comparePriority = function ($a, $b) {
+            if ($a[2] == $b[2]) {
+                return 0;
+            }
+            return ($a[2] < $b[2]) ? 1 : -1;
+        };
+        usort($tasks, $comparePriority);
+
+        return $tasks;
     }
 
     /**
@@ -86,10 +138,7 @@ class ToDoList
      */
     private function readTasksFromFile(): void
     {
-        if (!trim($this->taskFileName)) {
-            throw new Exception('File name not sent');
-        }
-        $this->file = fopen($this->taskFilePath, "a+");
+        $this->file = fopen($this->getTaskFilePath(), "a+");
         $this->stringToArray();
         fclose($this->file);
     }
@@ -128,10 +177,11 @@ class ToDoList
      */
     public function __destruct()
     {
-        $this->file = fopen($this->taskFilePath, "w+");
+        $this->file = fopen($this->getTaskFilePath(), "w+");
 
         fwrite($this->file, $this->arrayToString() . PHP_EOL);
         fclose($this->file);
     }
+
 
 }

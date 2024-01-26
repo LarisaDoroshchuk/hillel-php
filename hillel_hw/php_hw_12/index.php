@@ -11,10 +11,10 @@ require_once APP_DIR . 'logger/logger.php';
 
 try {
     $toDoList = new ToDoList('work');
-    $toDoList->addTask('work_1', 1);
-    $toDoList->addTask('work_2', 9);
-    $toDoList->deleteTask('65b2190fb8eb0');
-    $toDoList->completeTask('65b217469ce49');
+    $toDoList->addTask('work_3', 10);
+    $toDoList->addTask('work_4', 2);
+    $toDoList->deleteTask('65b3c8cbce0ff');
+    $toDoList->completeTask('65b3c8cbce08b');
     print_r($toDoList->getTasks());
 } catch (Exception $exception) {
     logger($exception->getMessage());
