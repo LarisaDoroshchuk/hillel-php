@@ -1,0 +1,13 @@
+  version: '3'
+
+  services:
+    php:
+      build:
+        context: ./
+      volumes:
+        - ./:/var/www/html/
+      ports:
+        - "8082:80"
+      working_dir: /app
+
+
